@@ -1,20 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <script>
-      location.href = "/";
-    </script>
-    <title>Nexora</title>
-    <link rel="stylesheet" href="css/coming-soon.css" />
-  </head>
-  <body>
-    <section class="home">
-      <div class="content">
-        <h1>Coming Soon...</h1>
-        <h4>The Proxy is unavailable right now, but coming soon!</h4>
-      </div>
-    </section>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Search</title>
+  <script src="s/uv/uv.bundle.js" defer></script>
+  <script src="s/uv/uv.config.js" defer></script>
+  <script src="s/register-sw.js" defer></script>
+  <script src="s/embed.js" defer></script>
+  <style>
+    body {
+      background-color: #0f0f0f;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    .search-container {
+      width: 90%;
+      max-width: 600px;
+      padding: 20px;
+    }
+    .search-form {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #1f1f1f;
+      color: #fff;
+      font-size: 16px;
+      outline: none;
+      transition: box-shadow 0.2s;
+    }
+    .search-form:focus {
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.1);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="search-container">
+    <input type="text" 
+           class="search-form" 
+           id="addressBar" 
+           placeholder="Enter URL or search term..." 
+           onkeydown="if(event.key==='Enter'){navigateToAddress();}"
+           autofocus>
+  </div>
+
+  <script>
+    function navigateToAddress() {
+      const input = document.getElementById('addressBar');
+      let url = input.value.trim();
+      if (!url) return;
+
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        if (url.includes('.')) url = 'https://' + url;
+        else url = 'https://www.google.com/?q=' + encodeURIComponent(url);
+      }
+
+      window.location.href = `/s/embed.html#${url}`;
+    }
+  </script>
+</body>
 </html>
